@@ -16,14 +16,18 @@ public class Main {
             currentVersionChecker = new CurrentVersionChecker();
             updateChecker = new UpdateChecker();
 
+            boolean tmp = new VersionComparator(updateChecker.getVersion()).isLargerThen(new VersionComparator(currentVersionChecker.getVersion()));
+
             System.out.println(currentVersionChecker.getVersion());
             System.out.println(updateChecker.getVersion());
-            System.out.println(currentVersionChecker.getVersion().equals(updateChecker.getVersion()));
+            System.out.println(tmp);
 
-            if (!currentVersionChecker.getVersion().equals(updateChecker.getVersion())) {
+            if (tmp) {
                 Runtime.getRuntime().exec("D:\\Program Files\\CORNPlayerW.x64\\Updater.x64.exe");
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (VersionComparator.VersionParsingException e) {
             e.printStackTrace();
         }
     }
